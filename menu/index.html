@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Menu</title>
+	<link rel="stylesheet" href="main.css">
+	<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC" rel="stylesheet">
+</head>
+<body>
+	<div class="wrapper"><nav>
+		<a href="#red" class="link">Red</a>
+		<a href="#blue" class="link">Blue</a>
+		<a href="#green" class="link">Green</a>
+		<a href="#orange" class="link">Orange</a>
+		<a href="#violet" class="link">Violet</a>
+	</nav></div>
+	
+	<div id="red"></div>
+	<div id="blue"></div>
+	<div id="green"></div>
+	<div id="orange"></div>
+	<div id="violet"></div>
+	<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <script>
+  
+  	$(document).ready(
+  		$('.link').on('click', function() {
+  			var href = $(this).attr('href');
+  			console.log(href);
+  			$('html, body').animate(
+  				{ scrollTop: $(href).offset().top }
+  				, 1500);
+  		})
+  	)
+  </script>
+</body>
+</html>
