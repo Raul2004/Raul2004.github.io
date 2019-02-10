@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Game</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+	<style>
+  body, html{
+    height: 100%;
+    user-select: none;
+  }
+		#square {
+			width: 200px;
+			height: 200px;
+			position: absolute;
+			background-color: green;
+			transition: 0.1s;
+      z-index: 10;
+		}
+
+    #text
+    {
+      z-index: 100;
+      height: 100%;
+      display: none;
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      background-color: rgba(0,0,0,0.7);
+      color: white;
+      justify-content: center;
+      -ms-align-items: center;
+      align-items: center;
+      font-size: 60px;
+      font-weight: bold;
+      font-weight: 3px 3px 3px rgba(0,0,0,0.8);
+
+
+
+    }
+
+
+    .circle {
+      border-radius: 50%;
+    }
+
+    #count{
+      z-index: 1;
+      position: absolute;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: darkorange;
+       font-size: 70px;
+      font-weight: bold;
+      text-shadow: 3px 3px 0 blue;
+    } 
+
+
+     
+
+	</style>
+</head>
+<body>
+  <div id="count"></div>
+	<div id="square"></div>
+  <div id="text">You won!</div>
+
+
+
+	<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <script>
+  	
+
+  	$(document).ready(function() {
+  		var count = 1;
+  		var colors = ['red', 'blue', 'green', 'magenta', 'blueviolet', 'black', 'dodgerblue', 'tomato', 'yellow'];
+
+
+      var width = $(document).width() - 50;
+      var height = $(document).height() - 50;
+
+      
+
+  		$('#square').on('click', function() {
+        var x = Math.floor(Math.random()*width);
+        var y = Math.floor(Math.random()*height);
+        $(this).toggleClass('circle');
+
+  			$(this).css('background-color', colors[count % 9]);
+        $(this).css('top', y)
+        $(this).css('left', x)
+        $('#count').text(count);
+  		
+  			count += 1;
+
+        
+  			 
+  		})
+  		
+  	})
+
+
+  </script>
+</body>
+</html>
