@@ -4,10 +4,15 @@
 	<meta charset="UTF-8">
 	<title>Game</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
 	<style>
   body, html{
     height: 100%;
     user-select: none;
+    margin: 0;
+    font-family: 'Robobto', sans-serif;
+    overflow: hidden; 
   }
 		#square {
 			width: 200px;
@@ -20,7 +25,7 @@
 
     #text
     {
-      z-index: 100;
+      z-index: 100%;
       height: 100%;
       display: none;
       position: absolute;
@@ -35,8 +40,9 @@
       font-size: 60px;
       font-weight: bold;
       font-weight: 3px 3px 3px rgba(0,0,0,0.8);
-
-
+      flex-direction: column;
+      z-index: 1000;
+      text-align: center;
 
     }
 
@@ -57,15 +63,45 @@
       text-shadow: 3px 3px 0 blue;
     } 
 
+    #nevgame {
+      border: 2px solid white;
+      background: transparent;
+      color: white;
+      text-shadow: 1px 1px 1px rgba(0,0,0,0.6);
+      width: 95%;
+      max-width: 220px;
+      height: 70px;
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 30px;
+      cursor: pointer;
+    }
+
+
+    #timer {
+      position: absolute;
+      right: 20px;
+      top: 0px;
+      text-align: center;
+      color: darkorange;
+       font-size: 70px;
+      font-weight: bold;
+      text-shadow: 3px 3px 0 blue;
+    }
+
 
      
 
 	</style>
 </head>
 <body>
-  <div id="count"></div>
+  <div id="timer">1</div>
+  <div id="count">0</div>
 	<div id="square"></div>
-  <div id="text">You won!</div>
+  <div id="text">
+    <div class="message">You won!</div> 
+    <button id="nevgame">Начать новую игру</button>
+  </div>
 
 
 
@@ -77,30 +113,83 @@
   	
 
   	$(document).ready(function() {
-  		var count = 1;
+  		var count = 0;
   		var colors = ['red', 'blue', 'green', 'magenta', 'blueviolet', 'black', 'dodgerblue', 'tomato', 'yellow'];
 
 
-      var width = $(document).width() - 50;
-      var height = $(document).height() - 50;
+      var width = $(document).width() - 200;
+      var height = $(document).height() - 200;
+
+      var timer = 10;
+      
+
+      function setInter() {
+        $('#timer').text(timer);
+        var inter = setInterval(function() {
+        if (timer > 0){
+          $('#timer').text(timer);
+          timer -= 1;
+          console.log(timer);
+        }else{
+          $('.message').text('Game over!');
+          $('#text').css('display', 'flex');
+          clearInterval(inter);
+        }
+        
+      }, 1000)
+        return inter;
+      }
+
+      var i = setInter();
+
+      
+
+
+      function randomPosition(el) {
+        var x = Math.floor(Math.random()*width);
+        var y = Math.floor(Math.random()*height);
+
+        $(el).toggleClass('circle');
+
+        $(el).css('background-color', colors[count % 9]);
+        $(el).css('top', y)
+        $(el).css('left', x)
+      }
 
       
 
   		$('#square').on('click', function() {
-        var x = Math.floor(Math.random()*width);
-        var y = Math.floor(Math.random()*height);
-        $(this).toggleClass('circle');
+        
+        randomPosition(this);
 
-  			$(this).css('background-color', colors[count % 9]);
-        $(this).css('top', y)
-        $(this).css('left', x)
-        $('#count').text(count);
-  		
-  			count += 1;
+        count += 1;
+        timer += 1;
+
+        $('#timer').text(timer);
+        $('#count'). text(count);
+
+
+        if (count == 10) {
+          $('.message').text('Winner, winner, chicken dinner!');
+          $('#text').css('display', 'flex');
+          clearInterval(i);
+        }
 
         
-  			 
+
   		})
+
+
+      $('#nevgame').on('click', function() {
+        count = 0;
+        timer = 10;
+        $('#count').text(count);
+        $('#text').css('display', 'none');
+        i = setInter();
+
+        randomPosition('#square');
+
+      })
   		
   	})
 
